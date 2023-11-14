@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_music_app/ViewModel/controller/player_controller.dart';
+import 'package:getx_music_app/viewmodel/controller/player_controller.dart';
 import 'package:getx_music_app/constant/colors.dart';
 import 'package:getx_music_app/constant/text_style.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -126,9 +126,13 @@ class Player extends StatelessWidget {
                         children: [
                           IconButton(
                             onPressed: () {
+                              //previous song: previous button
+                              int prevIndex = controller.playIndex.value - 1;
+                              if (prevIndex < 0) {
+                                prevIndex = data.length - 1;
+                              }
                               controller.playSong(
-                                  data[controller.playIndex.value - 1].uri,
-                                  controller.playIndex.value - 1);
+                                  data[prevIndex].uri, prevIndex);
                             },
                             icon: const Icon(
                               Icons.skip_previous_rounded,
@@ -167,9 +171,13 @@ class Player extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
+                              //next song: next button
+                              int nextIndex = controller.playIndex.value + 1;
+                              if (nextIndex >= data.length) {
+                                nextIndex = 0;
+                              }
                               controller.playSong(
-                                  data[controller.playIndex.value + 1].uri,
-                                  controller.playIndex.value + 1);
+                                  data[nextIndex].uri, nextIndex);
                             },
                             icon: const Icon(
                               Icons.skip_next_rounded,
